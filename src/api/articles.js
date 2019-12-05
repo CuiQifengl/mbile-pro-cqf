@@ -1,5 +1,6 @@
 //  引入工具
 import request from '@/utils/request'
+
 /**
  *文章列表
  * @param {*} channelId
@@ -12,6 +13,7 @@ export const getArticles = (channelId, timestamp) => {
     with_top: 1
   })
 }
+
 /**
  *不喜欢文章
  * @param {*} articleId
@@ -19,5 +21,17 @@ export const getArticles = (channelId, timestamp) => {
 export const disLike = (articleId) => {
   return request('/app/v1_0/article/dislikes', 'post', {
     target: articleId
+  })
+}
+
+/**
+ *举报举报
+ * @param {*} articleId
+ * @param {*} type
+ */
+export const reports = (articleId, type) => {
+  return request('/app/v1_0/article/reports', 'post', {
+    target: articleId,
+    type
   })
 }

@@ -31,6 +31,8 @@ instance.interceptors.request.use(function (config) {
   if (store.state.user.token) {
     config.headers.Authorization = `Bearer ${store.state.user.token}`
   }
+
+  console.log(config)
   return config
 }, function (error) {
   return Promise.reject(error)

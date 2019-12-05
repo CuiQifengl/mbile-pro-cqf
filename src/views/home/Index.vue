@@ -47,10 +47,11 @@
     </span>
     <more-active
     v-if="user.token"
-    :value="showMoreActive"
-     @input="showMoreActive=$event"
      :articleId="articleId"
+     :value="showMoreActive"
+     @input="showMoreActive=false"
      @del="removeArticle"
+     @des="removeArticle"
      ></more-active>
   </div>
 </template>
@@ -82,7 +83,7 @@ export default {
       myChannel: [],
       // 频道索引
       channelIndex: 0,
-      // 点错号显示更多操作
+      // 父组件显示更多操作
       showMoreActive: false,
       // 文章的id
       articleId: null
@@ -119,16 +120,12 @@ export default {
     // 删除文章
     removeArticle () {
       const article = this.activeChannel.articles
-      // console.log(article)
       const index = article.findIndex(item => {
-        // console.log(item.art_id)
         return item.art_id.toString() === this.articleId
       })
-      // console.log(index)
-      // console.log(this.articleId)
       article.splice(index, 1)
     },
-    // 打开更多操作
+    // 打开更多操作,获取文章的id
     openMoreActive (articleId) {
       this.showMoreActive = true
       this.articleId = articleId
