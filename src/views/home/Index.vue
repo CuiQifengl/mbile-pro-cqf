@@ -15,7 +15,7 @@
                 finished-text="没有更多了"
                 @load="onLoad"
               >
-                <van-cell v-for="item in channel.articles" :key="item.art_id.toString()">
+                <van-cell v-for="item in channel.articles" :key="item.art_id.toString()" :to="'/article/'+item.art_id.toString()">
                   <div class="article_item">
                     <h3 class="van-ellipsis">{{item.title}}</h3>
                     <div class="img_box" v-if="item.cover.type===3">
@@ -30,7 +30,7 @@
                       <span>{{item.aut_name}}</span>
                       <span>{{item.comm_count}}评论</span>
                       <span>{{item.pubdate |relativeTime}}</span>
-                      <span class="close" v-if="user.token" @click="openMoreActive(item.art_id.toString())">
+                      <span class="close" v-if="user.token" @click.stop="openMoreActive(item.art_id.toString())">
                         <van-icon name="cross"></van-icon>
                       </span>
                     </div>
@@ -42,9 +42,10 @@
         </div>
       </van-tab>
     </van-tabs>
-    <span class="bar_btn" slot="nav-right">
+    <span class="bar_btn" slot="nav-right" @click="openchannelEdit">
       <van-icon name="wap-nav"></van-icon>
     </span>
+    <!-- 更多操作 -->
     <more-active
     v-if="user.token"
      :articleId="articleId"
@@ -53,6 +54,8 @@
      @del="removeArticle"
      @des="removeArticle"
      ></more-active>
+     <!-- 频道编辑 -->
+     <channel-edit v-model="showChannel" :myChannel="myChannel" :channelIndex="channelIndex"></channel-edit>
   </div>
 </template>
 
@@ -65,9 +68,11 @@ import { getArticles } from '@/api/articles'
 import { mapState } from 'vuex'
 // 引入more-active组件
 import moreActive from './components/more-active'
+// 引入编辑频道组件
+import channelEdit from './components/channel-edit'
 export default {
   name: 'home',
-  components: { moreActive },
+  components: { moreActive, channelEdit },
   data () {
     return {
       // // 加载效果,false加载结束
@@ -81,12 +86,14 @@ export default {
       successText: '',
       // 频道
       myChannel: [],
-      // 频道索引
+      // 当前激活频道索引
       channelIndex: 0,
       // 父组件显示更多操作
       showMoreActive: false,
       // 文章的id
-      articleId: null
+      articleId: null,
+      // 展示频道编辑
+      showChannel: false
     }
   },
   created () {
@@ -117,6 +124,10 @@ export default {
     }
   },
   methods: {
+    // 打开频道编辑
+    openchannelEdit () {
+      this.showChannel = true
+    },
     // 删除文章
     removeArticle () {
       const article = this.activeChannel.articles

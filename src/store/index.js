@@ -8,9 +8,15 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     // 用户信息
-    user: auth.getUser()
+    user: auth.getUser(),
+    // 用户头像
+    photo: ''
   },
   mutations: {
+    // 设置用户头像
+    setPhoto (state, data) {
+      state.photo = data
+    },
     // 修改用户信息
     setUser (state, user) {
       state.user = user

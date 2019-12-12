@@ -7,9 +7,10 @@
       right-text="搜索"
       left-arrow
       @click-right="$router.push('/search')"
+      v-if="showheader"
     />
     <!-- 内容 -->
-    <div class="my-wrapper">
+    <div class="my-wrapper" :class="{noTop:!showheader}">
       <router-view></router-view>
     </div>
     <!-- 底部 -->
@@ -25,7 +26,13 @@
 </template>
 
 <script>
-export default {}
+export default {
+  computed: {
+    showheader () {
+      return this.$route.path !== '/user'
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>

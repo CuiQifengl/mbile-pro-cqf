@@ -35,3 +35,30 @@ export const reports = (articleId, type) => {
     type
   })
 }
+/**
+ *联想建议
+ * @param {*} q
+ */
+export const suggestion = (q) => {
+  return request('/app/v1_0/suggestion', 'get', { q })
+}
+/**
+ *搜索结果文章
+ * @param {*} page
+ * @param {*} perpage
+ * @param {*} q
+ */
+export const resoult = ({ page = 1, perpage = 10, q }) => {
+  return request('/app/v1_0/search', 'get', {
+    page,
+    per_page: perpage,
+    q
+  })
+}
+/**
+ *获取文章详情
+ * @param {*} articleId
+ */
+export const details = (articleId) => {
+  return request(`/app/v1_0/articles/${articleId}`, 'get')
+}

@@ -6,6 +6,9 @@ import request from '@/utils/request'
 export const getChannels = () => {
   return request('/app/v1_0/user/channels', 'get')
 }
-// export const getMyChannels = () => {
-//   return request('app/v1_0/user/channels', 'get')
-// }
+/**
+ * 全部频道列表
+ */
+export const allChannels = () => {
+  return request('/app/v1_0/channels', 'get')
+}
